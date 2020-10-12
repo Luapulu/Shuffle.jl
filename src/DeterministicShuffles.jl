@@ -2,8 +2,25 @@
     Faro(s::Symbol)
     Weave(s::Symbol)
 
-Faro (Weave) shuffling algorithm where `s` can be `:in` for an in-shuffle or `:out`
-for an out-shuffle.
+[Faro (weave) shuffling algorithm](https://en.wikipedia.org/wiki/Faro_shuffle) where `s` can be
+`:in` for an in-shuffle or `:out` for an out-shuffle.
+
+# Examples
+```jldoctest
+julia> shuffle([1, 2, 3, 4, 5, 6, 7, 8], Faro(:out))
+8-element Array{Int64,1}:
+ 1
+ 5
+ 2
+ 6
+ 3
+ 7
+ 4
+ 8
+
+julia> nshuffle(collect(1:52), 26, Weave(:in)) == collect(52:-1:1)
+true
+```
 """
 struct Faro <: DeterministicShuffle
     in::Bool
@@ -18,6 +35,14 @@ function Faro(s::Symbol)
         return Faro(false)
     else
         error("Faro (Weave) can be :in or :out, not :$s")
+    end
+end
+
+function show(io::IO, s::Faro)
+    if s.in
+        print(io, "Faro(:in)")
+    else
+        print(io, "Faro(:out)")
     end
 end
 

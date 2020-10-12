@@ -3,7 +3,16 @@
 """
     FisherYates()
 
-Fisher-Yates shuffling algorithm as implemented by standard library module Random.
+[Fisher-Yates shuffling algorithm](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle) as
+implemented by [`Random.shuffle`](https://docs.julialang.org/en/v1/stdlib/Random/#Random.shuffle).
+
+# Examples
+```jldoctest
+julia> mt1 = MersenneTwister(1234); mt2 = MersenneTwister(1234);
+
+julia> Shuffle.shuffle(mt1, collect(1:100), FisherYates()) == Random.shuffle(mt2, collect(1:100))
+true
+```
 """
 struct FisherYates <: RandomShuffle end
 
@@ -14,7 +23,22 @@ shuffle!(r::AbstractRNG, c::AbstractArray, s::FisherYates) = Random.shuffle!(r, 
 """
     GilbertShannonReeds()
 
-Gilbert-Shannon-Reeds shuffling algorithm.
+[Gilbert-Shannon-Reeds shuffling algorithm](https://en.wikipedia.org/wiki/Gilbert–Shannon–Reeds_model).
+
+# Examples
+```jldoctest
+julia> mt = MersenneTwister(1234);
+
+julia> nshuffle(mt, collect(1:7), 7, GilbertShannonReeds())
+7-element Array{Int64,1}:
+ 6
+ 1
+ 7
+ 3
+ 5
+ 4
+ 2
+```
 """
 struct GilbertShannonReeds <: RandomShuffle end
 
