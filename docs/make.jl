@@ -19,3 +19,7 @@ makedocs(
         prettyurls = get(ENV, "CI", nothing) == "true"
     )
 )
+
+deploydocs(
+    repo = "github.com/Luapulu/Shuffle.jl.git",
+)
