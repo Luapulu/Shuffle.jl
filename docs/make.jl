@@ -22,4 +22,5 @@ makedocs(
 
 deploydocs(
     repo = "github.com/Luapulu/Shuffle.jl.git",
+    devbranch = "dev",
 )
