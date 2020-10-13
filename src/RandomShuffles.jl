@@ -48,7 +48,7 @@ function shuffle(
     s::GilbertShannonReeds,
     out::AbstractArray = similar(c),
 )
-    length(out) == length(c) || error("array lengths c and out must equal")
+    length(out) == length(c) || throw(ArgumentError("array lengths c and out must equal"))
 
     # flip a coin to determine from which pile each item will come
     flips = rand(r, Bool, length(c))
