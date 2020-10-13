@@ -37,7 +37,17 @@ end
     end
 
     let mt1 = MersenneTwister(12), mt2 = MersenneTwister(12)
-        @test shuffle!(mt1, collect(1:100), FisherYates()) == Random.shuffle!(mt2, collect(1:100))
+        @test shuffle!(mt1, collect(1:100)) == Random.shuffle!(mt2, collect(1:100))
+    end
+
+    let mt1 = MersenneTwister(12), mt2 = MersenneTwister(12)
+        arr1 = Random.shuffle!(mt2, collect(1:100))
+        Random.shuffle!(mt2, arr1)
+        Random.shuffle!(mt2, arr1)
+
+        arr2 = collect(1:100)
+        nshuffle!(mt1, arr2, 3, FisherYates())
+        @test arr2 == arr1
     end
 end
 
