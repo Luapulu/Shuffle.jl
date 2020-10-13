@@ -6,9 +6,4 @@
 
 Support for a number of deterministic and random shuffling algorithms.
 
-Currently implemented algorithms are:
-- [faro (or weave) shuffle](https://luapulu.github.io/Shuffle.jl/stable/#Shuffle.Faro)
-- [Fisher-Yates shuffle](https://luapulu.github.io/Shuffle.jl/stable/#Shuffle.FisherYates)
-- [Gilbert-Shannon-Reeds model](https://luapulu.github.io/Shuffle.jl/stable/#Shuffle.GilbertShannonReeds)
-
-See [docs](https://luapulu.github.io/Shuffle.jl/stable) for further details.
+See [docs](https://luapulu.github.io/Shuffle.jl/stable) for more.
