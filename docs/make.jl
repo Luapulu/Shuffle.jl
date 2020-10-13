@@ -26,5 +26,5 @@ makedocs(
 deploydocs(
     repo = "github.com/Luapulu/Shuffle.jl.git",
     devbranch = "main",
-    versions = ["stable" => "v^", "v#.#.#", devurl => devurl]
+    versions = ["stable" => "v^", "v#.#.#", devurl => "dev"]
 )
