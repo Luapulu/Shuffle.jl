@@ -14,7 +14,10 @@ DocMeta.setdocmeta!(
 makedocs(
     sitename = "Shuffle.jl",
     modules = [Shuffle],
-    pages = ["Home" => "index.md"],
+    pages = [
+        "Home" => "index.md"
+        "Reference" => "reference.md"
+    ],
     format = Documenter.HTML(
         prettyurls = get(ENV, "CI", nothing) == "true"
     )
