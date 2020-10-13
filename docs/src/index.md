@@ -24,7 +24,7 @@ DocTestSetup = quote
 end
 ```
 
-[`Shuffle.shuffle`](file:///Users/obelix/OneDrive/Code/Shuffle/Shuffle.jl/docs/build/reference.html#Shuffle.shuffle) works just like [`Random.shuffle`](https://docs.julialang.org/en/v1/stdlib/Random/#Random.shuffle) by default.
+[`Shuffle.shuffle`](https://luapulu.github.io/Shuffle.jl/stable/reference/#Shuffle.shuffle) works just like [`Random.shuffle`](https://docs.julialang.org/en/v1/stdlib/Random/#Random.shuffle) by default.
 
 ```jldoctest; setup = :(Random.seed!(1))
 julia> using Shuffle
@@ -49,7 +49,7 @@ julia> Shuffle.shuffle(mt1, collect(1:100)) == Random.shuffle(mt2, collect(1:100
 true
 ```
 
-The default algorithm is [Fisher-Yates](https://luapulu.github.io/Shuffle.jl/stable/#Shuffle.FisherYates), as implemented by [Random](https://docs.julialang.org/en/v1/stdlib/Random/), but you can just as easily use any other algorithm. See [`Shuffle.DEFAULTS`](@ref) to set any other algorithm as the default.
+The default algorithm is [Fisher-Yates](https://luapulu.github.io/Shuffle.jl/stable/reference/#Shuffle.FisherYates), as implemented by [Random](https://docs.julialang.org/en/v1/stdlib/Random/), but you can just as easily use any other algorithm. See [`Shuffle.DEFAULTS`](@ref) to set another algorithm as the default.
 
 ```jldoctest; setup = :(Random.seed!(1))
 julia> shuffle(collect(1:52), GilbertShannonReeds())
