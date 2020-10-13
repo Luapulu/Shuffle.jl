@@ -1,13 +1,12 @@
-using Test, Shuffle
+using Test, Shuffle, Documenter
 using Random: rand, MersenneTwister
 import Random
 
 @testset "Faro" begin
-    @test shuffle!([1, 0], Faro(:in)) == [0, 1]
-    @test shuffle([1, 0], Faro(:out)) == [1, 0]
+    @test_throws ArgumentError Faro(:notinorout)
 
-    @test shuffle([1, 2, 3, 4], Faro(:in)) == [3, 1, 4, 2]
-    @test shuffle!([1, 2, 3, 4], Faro(:out)) == [1, 3, 2, 4]
+    @test sprint(show, Faro(:in)) == "Faro(:in)"
+    @test sprint(show, Faro(:out)) == "Faro(:out)"
 
     shuffle!([1, 2, 3, 4, 5, 6], Faro(:in)) == [4, 1, 5, 2, 6, 3]
     shuffle([1, 2, 3, 4, 5, 6], Faro(:out)) == [1, 4, 2, 5, 3, 6]
@@ -66,3 +65,16 @@ end
               nshuffle(mt2, collect(1:100), 7, GilbertShannonReeds())
     end
 end
+
+DocMeta.setdocmeta!(
+    Shuffle,
+    :DocTestSetup,
+    quote
+        using Shuffle
+        import Random
+        using Random: MersenneTwister
+    end;
+    recursive=true
+)
+
+doctest(Shuffle)
