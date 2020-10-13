@@ -6,4 +6,4 @@
 
 Support for a number of deterministic and random shuffling algorithms.
 
-See [docs](https://luapulu.github.io/Shuffle.jl/stable) for more.
+See [docs](https://luapulu.github.io/Shuffle.jl/stable) for more information.
