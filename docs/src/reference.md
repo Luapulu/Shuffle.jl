@@ -1,4 +1,5 @@
-# Basic Functions
+# Reference
+## Basic Functions
 
 ```@docs
 shuffle
@@ -7,20 +8,20 @@ nshuffle
 nshuffle!
 ```
 
-# Shuffling Algorithms
+## Shuffling Algorithms
 
 ```@docs
 AbstractShuffle
 ```
 
-## `DeterministicShuffle`
+### `DeterministicShuffle`
 
 ```@docs
 DeterministicShuffle
 Faro
 ```
 
-## `RandomShuffle`
+### `RandomShuffle`
 
 ```@docs
 RandomShuffle
@@ -28,7 +29,7 @@ FisherYates
 GilbertShannonReeds
 ```
 
-# Defaults
+## Defaults
 
 ```@docs
 Shuffle.DEFAULTS
