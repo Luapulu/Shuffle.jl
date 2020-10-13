@@ -34,7 +34,7 @@ function Faro(s::Symbol)
     elseif s == :out
         return Faro(false)
     else
-        error("Faro (Weave) can be :in or :out, not :$s")
+        throw(ArgumentError("Faro (Weave) can be :in or :out, not :$s"))
     end
 end
 
