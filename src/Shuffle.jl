@@ -3,11 +3,11 @@
 
 Support for a number of deterministic and random shuffling algorithms. Provides functions
 [`shuffle`](@ref), [`shuffle!`](@ref), [`nshuffle`](@ref) and [`nshuffle!`](@ref)
-as well as the following algorithms:
-- [faro (or weave) shuffle](https://en.wikipedia.org/wiki/Faro_shuffle),
-- [Fisher-Yates shuffle](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle)
+as well as the following shuffling algorithms:
+- [faro (or weave) shuffle](https://luapulu.github.io/Shuffle.jl/stable/#Shuffle.Faro),
+- [Fisher-Yates shuffle](https://luapulu.github.io/Shuffle.jl/stable/#Shuffle.FisherYates)
     (uses [`Random.shuffle`](https://docs.julialang.org/en/v1/stdlib/Random/#Random.shuffle)) and
-- [Gilbert-Shannon-Reeds model](https://en.wikipedia.org/wiki/Gilbert–Shannon–Reeds_model).
+- [Gilbert-Shannon-Reeds model](https://luapulu.github.io/Shuffle.jl/stable/#Shuffle.GilbertShannonReeds).
 """
 module Shuffle
 
