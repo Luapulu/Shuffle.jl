@@ -180,7 +180,7 @@ julia> shuffle!(a, Faro(:out)); a
  5
 ```
 """
-function shuffle!(c, s::AbstractShuffle=DEFAULTS.shuffle) end
+shuffle!(c) = shuffle!(c, DEFAULTS.shuffle)
 shuffle!(r::AbstractRNG, c) = shuffle!(r, c, DEFAULTS.shuffle)
 shuffle!(c, s::RandomShuffle) = shuffle!(default_rng(), c, s)
 
@@ -217,8 +217,8 @@ julia> shuffle([6, 5, 4, 3, 2, 1], Faro(:in))
 ```
 """
 shuffle(c, s::AbstractShuffle=DEFAULTS.shuffle) = shuffle!(copymutable(c), s)
-shuffle(c, s::RandomShuffle) = shuffle(default_rng(), c, s)
 shuffle(r::AbstractRNG, c, s::RandomShuffle=DEFAULTS.shuffle) = shuffle!(r, copymutable(c), s)
+shuffle(c, s::RandomShuffle) = shuffle(default_rng(), c, s)
 
 ## nshuffle! and nshuffle ##
 
