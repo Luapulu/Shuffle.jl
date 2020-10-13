@@ -46,7 +46,7 @@ end
         Random.shuffle!(mt2, arr1)
 
         arr2 = collect(1:100)
-        nshuffle!(mt1, arr2, 3, FisherYates())
+        nshuffle!(mt1, arr2, 3)
         @test arr2 == arr1
     end
 end
