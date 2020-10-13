@@ -1,4 +1,10 @@
 # Reference
+
+```@contents
+Pages = ["reference.md"]
+Depth = 3
+```
+
 ## Basic Functions
 
 ```@docs
