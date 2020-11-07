@@ -24,7 +24,9 @@ DocTestSetup = quote
 end
 ```
 
-[`Shuffle.shuffle`](https://luapulu.github.io/Shuffle.jl/stable/reference/#Shuffle.shuffle) works just like [`Random.shuffle`](https://docs.julialang.org/en/v1/stdlib/Random/#Random.shuffle) by default.
+[`Shuffle.shuffle`](https://luapulu.github.io/Shuffle.jl/stable/reference/#Shuffle.shuffle)
+works just like [`Random.shuffle`](https://docs.julialang.org/en/v1/stdlib/Random/#Random.shuffle)
+by default.
 
 ```jldoctest; setup = :(Random.seed!(1))
 julia> using Shuffle
@@ -40,16 +42,9 @@ julia> shuffle([1, 2, 3, 4, 5, 6, 7])
  7
 ```
 
-In fact, they behave identically.
-
-```jldoctest
-julia> mt1 = MersenneTwister(1234); mt2 = MersenneTwister(1234);
-
-julia> Shuffle.shuffle(mt1, collect(1:100)) == Random.shuffle(mt2, collect(1:100))
-true
-```
-
-The default algorithm is [Fisher-Yates](https://luapulu.github.io/Shuffle.jl/stable/reference/#Shuffle.FisherYates), as implemented by [Random](https://docs.julialang.org/en/v1/stdlib/Random/), but you can just as easily use any other algorithm. See [`Shuffle.DEFAULTS`](@ref) to set another algorithm as the default.
+The default shuffling algorithm randomises a collection totally, but you can
+just as easily use any other algorithm. See [`Shuffle.DEFAULTS`](@ref) to set
+another algorithm as the default.
 
 ```jldoctest; setup = :(Random.seed!(1))
 julia> shuffle(collect(1:52), GilbertShannonReeds())
@@ -91,7 +86,7 @@ julia> arr
  "B"
 ```
 
-We can shuffle 3 more times to get back to the original order.
+We can also shuffle 3 times in a row (and get back to the original order).
 
 ```jldoctest faro
 julia> nshuffle!(arr, 3, Faro(:in))
