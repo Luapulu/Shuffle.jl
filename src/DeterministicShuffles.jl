@@ -22,7 +22,7 @@ julia> nshuffle(collect(1:52), 26, Weave(:in)) == collect(52:-1:1)
 true
 ```
 """
-struct Faro <: DeterministicShuffle
+struct Faro <: AbstractDeterministicShuffle
     in::Bool
 end
 
