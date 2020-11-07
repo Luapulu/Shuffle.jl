@@ -4,20 +4,17 @@ using Random: MersenneTwister
 @testset "Shuffle.jl" begin
 
 @testset "Faro" begin
-    @test_throws ArgumentError Faro(:notinorout)
-
-    @test sprint(show, Faro(:in)) == "Faro(:in)"
-    @test sprint(show, Faro(:out)) == "Faro(:out)"
+    @test Faro === Weave
 
     x = [1, 2, 3, 4, 5, 6]
-    shuffle!(x, Faro(:in)) == x == [4, 1, 5, 2, 6, 3]
+    shuffle!(x, Faro{:in}()) == x == [4, 1, 5, 2, 6, 3]
 
     y = [1, 2, 3, 4, 5, 6]
-    shuffle([1, 2, 3, 4, 5, 6], Faro(:out)) == [1, 4, 2, 5, 3, 6] != y
+    shuffle([1, 2, 3, 4, 5, 6], Faro{:out}()) == [1, 4, 2, 5, 3, 6] != y
 
     arr = rand("ATCG", 1000)
-    inshuffled = shuffle(arr, Faro(:in))
-    outshuffled = shuffle(arr, Faro(:out))
+    inshuffled = shuffle(arr, Faro{:in}())
+    outshuffled = shuffle(arr, Faro{:out}())
 
     @test inshuffled[1:2:end] == arr[501:end]
     @test inshuffled[2:2:end] == arr[1:500]
@@ -25,14 +22,14 @@ using Random: MersenneTwister
     @test outshuffled[2:2:end] == arr[501:end]
     @test outshuffled[1:2:end] == arr[1:500]
 
-    arr = nshuffle(collect(1:52), 26, Faro(:in))
+    arr = nshuffle(collect(1:52), 26, Faro{:in}())
     @test arr == collect(52:-1:1)
 
     revarr = collect(52:-1:1)
-    nshuffle!(revarr, 26, Faro(:in))
+    nshuffle!(revarr, 26, Faro{:in}())
     @test revarr == collect(1:52)
 
-    @test nshuffle!(collect(1:52), 8, Faro(:out)) == collect(1:52)
+    @test nshuffle!(collect(1:52), 8, Faro{:out}()) == collect(1:52)
 end
 
 @testset "RandomShuffle" begin
@@ -88,7 +85,7 @@ end
     end
 end
 
-if false
+if true
     DocMeta.setdocmeta!(
         Shuffle,
         :DocTestSetup,

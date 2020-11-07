@@ -1,13 +1,13 @@
 """
-    Faro(s::Symbol)
-    Weave(s::Symbol)
+    Faro{S}()
+    Weave{S}()
 
 [Faro (weave)](https://en.wikipedia.org/wiki/Faro_shuffle) card shuffle where
-`s` can be `:in` for an in-shuffle or `:out` for an out-shuffle.
+`S` can be `:in` for an in-shuffle or `:out` for an out-shuffle.
 
 # Examples
 ```jldoctest
-julia> shuffle([1, 2, 3, 4, 5, 6, 7, 8], Faro(:out))
+julia> shuffle([1, 2, 3, 4, 5, 6, 7, 8], Faro{:out}())
 8-element Array{Int64,1}:
  1
  5
@@ -18,35 +18,21 @@ julia> shuffle([1, 2, 3, 4, 5, 6, 7, 8], Faro(:out))
  4
  8
 
-julia> nshuffle(collect(1:52), 26, Weave(:in)) == collect(52:-1:1)
+julia> nshuffle(collect(1:52), 26, Weave{:in}()) == collect(52:-1:1)
 true
 ```
 """
-struct Faro <: AbstractDeterministicShuffle
-    in::Bool
-end
+struct Faro{S} <: AbstractDeterministicShuffle end
 
-const Weave = Faro
+const Weave{S} = Faro{S}
 
-function Faro(s::Symbol)
-    if s == :in
-        return Faro(true)
-    elseif s == :out
-        return Faro(false)
-    else
-        throw(ArgumentError("Faro (Weave) can be :in or :out, not :$s"))
-    end
-end
+_bo(::Faro{:in}) = 0
+_bo(::Faro{:out}) = 1
 
-function show(io::IO, s::Faro)
-    if s.in
-        print(io, "Faro(:in)")
-    else
-        print(io, "Faro(:out)")
-    end
-end
+_eo(::Faro{:in}) = 1
+_eo(::Faro{:out}) = 0
 
-function shuffle!(c::AbstractArray, s::Faro, tmp = similar(c, (length(c) ÷ 2,)))
+function shuffle!(c::AbstractArray, f::Faro, tmp = similar(c, (length(c) ÷ 2,)))
     iseven(length(c)) || error("Faro (Weave) shuffling requires even length array")
     2 * length(tmp) >= length(c) || error("temp array must be >= half chip array length")
 
@@ -57,8 +43,8 @@ function shuffle!(c::AbstractArray, s::Faro, tmp = similar(c, (length(c) ÷ 2,))
     end
 
     for i = 1:hlf
-        @inbounds c[2i-s.in] = c[hlf+i]
-        @inbounds c[2i-!s.in] = tmp[i]
+        @inbounds c[2i - _eo(f)] = c[hlf+i]
+        @inbounds c[2i - _bo(f)] = tmp[i]
     end
 
     return c

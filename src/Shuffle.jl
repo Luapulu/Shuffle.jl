@@ -127,8 +127,8 @@ julia> mt1 = MersenneTwister(1234); mt2 = MersenneTwister(1234);
 julia> shuffle(mt1, collect(1:100)) == shuffle(mt2, collect(1:100), RandomShuffle())
 true
 
-julia> Shuffle.DEFAULTS.shuffle = Faro(:in); Shuffle.DEFAULTS
-Shuffle.Defaults(Faro(:in))
+julia> Shuffle.DEFAULTS.shuffle = Faro{:in}(); Shuffle.DEFAULTS
+Shuffle.Defaults(Faro{:in}())
 
 julia> shuffle([1, 2, 3, 4, 5, 6, 7, 8])
 8-element Array{Int64,1}:
@@ -169,7 +169,7 @@ julia> shuffle!(mt, a); a
  4
  5
 
-julia> shuffle!(a, Faro(:out)); a
+julia> shuffle!(a, Faro{:out}()); a
 6-element Array{Int64,1}:
  2
  6
@@ -205,7 +205,7 @@ julia> shuffle(mt, [1, 2, 3, 4, 5, 6, 7, 8], GilbertShannonReeds())
  4
  5
 
-julia> shuffle([6, 5, 4, 3, 2, 1], Faro(:in))
+julia> shuffle([6, 5, 4, 3, 2, 1], Faro{:in}())
 6-element Array{Int64,1}:
  3
  6
@@ -271,7 +271,7 @@ To shuffle `c` in-place see [`nshuffle!`](@ref)
 
 # Examples
 ```jldoctest
-julia> nshuffle(collect(1:8), 3, Faro(:in))
+julia> nshuffle(collect(1:8), 3, Faro{:in}())
 8-element Array{Int64,1}:
  8
  7

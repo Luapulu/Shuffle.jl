@@ -76,7 +76,7 @@ In-place shuffling works, too.
 ```jldoctest faro
 julia> arr = ["A", "B", "C", "D"];
 
-julia> shuffle!(arr, Faro(:in));
+julia> shuffle!(arr, Faro{:in}());
 
 julia> arr
 4-element Array{String,1}:
@@ -89,7 +89,7 @@ julia> arr
 We can also shuffle 3 times in a row (and get back to the original order).
 
 ```jldoctest faro
-julia> nshuffle!(arr, 3, Faro(:in))
+julia> nshuffle!(arr, 3, Faro{:in}())
 4-element Array{String,1}:
  "A"
  "B"
