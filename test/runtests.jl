@@ -85,7 +85,7 @@ end
     end
 end
 
-if true
+if false
     DocMeta.setdocmeta!(
         Shuffle,
         :DocTestSetup,
