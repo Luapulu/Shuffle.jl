@@ -1,6 +1,7 @@
 using Test, Shuffle, Documenter
-using Random: rand, MersenneTwister
-import Random
+using Random: MersenneTwister
+
+@testset "Shuffle.jl" begin
 
 @testset "Faro" begin
     @test_throws ArgumentError Faro(:notinorout)
@@ -8,8 +9,11 @@ import Random
     @test sprint(show, Faro(:in)) == "Faro(:in)"
     @test sprint(show, Faro(:out)) == "Faro(:out)"
 
-    shuffle!([1, 2, 3, 4, 5, 6], Faro(:in)) == [4, 1, 5, 2, 6, 3]
-    shuffle([1, 2, 3, 4, 5, 6], Faro(:out)) == [1, 4, 2, 5, 3, 6]
+    x = [1, 2, 3, 4, 5, 6]
+    shuffle!(x, Faro(:in)) == x == [4, 1, 5, 2, 6, 3]
+
+    y = [1, 2, 3, 4, 5, 6]
+    shuffle([1, 2, 3, 4, 5, 6], Faro(:out)) == [1, 4, 2, 5, 3, 6] != y
 
     arr = rand("ATCG", 1000)
     inshuffled = shuffle(arr, Faro(:in))
@@ -24,60 +28,77 @@ import Random
     arr = nshuffle(collect(1:52), 26, Faro(:in))
     @test arr == collect(52:-1:1)
 
-    nshuffle!(arr, 26, Faro(:in))
-    @test arr == collect(1:52)
+    revarr = collect(52:-1:1)
+    nshuffle!(revarr, 26, Faro(:in))
+    @test revarr == collect(1:52)
 
     @test nshuffle!(collect(1:52), 8, Faro(:out)) == collect(1:52)
 end
 
-@testset "FisherYates" begin
-    let mt1 = MersenneTwister(42), mt2 = MersenneTwister(42)
-        @test shuffle(mt1, collect(1:100)) == Random.shuffle(mt2, collect(1:100))
+@testset "RandomShuffle" begin
+    # probably not the same after shuffling
+    arr = rand(1000)
+    arr_copy = copy(arr)
+    @test shuffle!(arr, RandomShuffle()) == arr != arr_copy
+
+    narr = rand(1000)
+    narr_copy = copy(narr)
+    @test nshuffle!(narr, 5, RandomShuffle()) == narr != narr_copy
+
+    let mt1 = MersenneTwister(42), mt2 = MersenneTwister(42), x = rand(1000)
+        @test shuffle(mt1, x, RandomShuffle()) ==
+              shuffle!(mt2, x, RandomShuffle())
     end
 
-    let mt1 = MersenneTwister(12), mt2 = MersenneTwister(12)
-        @test shuffle!(mt1, collect(1:100)) == Random.shuffle!(mt2, collect(1:100))
+    let mt1 = MersenneTwister(12), mt2 = MersenneTwister(12), x = rand(1000)
+        @test shuffle(mt1, x, RandomShuffle()) ==
+              shuffle!(mt2, x, RandomShuffle())
     end
 
-    let mt1 = MersenneTwister(12), mt2 = MersenneTwister(12)
-        arr1 = Random.shuffle!(mt2, collect(1:100))
-        Random.shuffle!(mt2, arr1)
-        Random.shuffle!(mt2, arr1)
+    let mt1 = MersenneTwister(12), mt2 = MersenneTwister(12),
+            mt3 = MersenneTwister(12), x = rand(1000)
 
-        arr2 = collect(1:100)
-        nshuffle!(mt1, arr2, 3)
-        @test arr2 == arr1
+        y = shuffle(mt1, x, RandomShuffle())
+        shuffle!(mt1, y, RandomShuffle())
+        shuffle!(mt1, y, RandomShuffle())
+
+        @test nshuffle(mt2, x, 3, RandomShuffle()) == y
+
+        @test nshuffle!(mt3, x, 3, RandomShuffle()) == y
     end
 end
 
 @testset "GilbertShannonReeds" begin
     # probably not the same after shuffling
-    @test shuffle(collect(1:1000), GilbertShannonReeds()) != collect(1:1000)
-    @test nshuffle(collect(1:52), 10, GilbertShannonReeds()) != collect(1:52)
+    arr = rand(1000)
+    @test shuffle(arr, GilbertShannonReeds()) != arr
 
-    let mt1 = MersenneTwister(32), mt2 = MersenneTwister(32)
-        @test shuffle(mt1, collect(1:100), GilbertShannonReeds()) ==
-              shuffle(mt2, collect(1:100), GilbertShannonReeds())
+    narr = rand(1000)
+    narr_copy = copy(narr)
+    @test nshuffle!(narr, 10, GilbertShannonReeds()) == narr != narr_copy
+
+    let mt1 = MersenneTwister(32), mt2 = MersenneTwister(32), x = rand(1000)
+        @test shuffle(mt1, x, GilbertShannonReeds()) ==
+              shuffle(mt2, x, GilbertShannonReeds())
     end
 
-    let mt1 = MersenneTwister(153), mt2 = MersenneTwister(153)
-        @test nshuffle(mt1, collect(1:100), 7, GilbertShannonReeds()) ==
-              nshuffle(mt2, collect(1:100), 7, GilbertShannonReeds())
+    let mt1 = MersenneTwister(153), mt2 = MersenneTwister(153), x = rand(1000)
+        @test nshuffle(mt1, x, 7, GilbertShannonReeds()) ==
+              nshuffle!(mt2, x, 7, GilbertShannonReeds())
     end
 end
 
-# Used for local testing only
-if false
-    DocMeta.setdocmeta!(
-        Shuffle,
-        :DocTestSetup,
-        quote
-            using Shuffle
-            import Random
-            using Random: MersenneTwister
-        end;
-        recursive=true
-    )
+DocMeta.setdocmeta!(
+    Shuffle,
+    :DocTestSetup,
+    quote
+        using Shuffle
+        import Random
+        using Random: MersenneTwister
+    end;
+    recursive=true
+)
 
-    doctest(Shuffle)
+doctest(Shuffle)
+
 end

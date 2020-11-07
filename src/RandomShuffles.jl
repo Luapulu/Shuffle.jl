@@ -1,46 +1,60 @@
-## FisherYates ##
+## RandomShuffle ##
 
 """
-    FisherYates()
+    RandomShuffle()
 
-[Fisher-Yates shuffling algorithm](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle) as
-implemented by [`Random.shuffle`](https://docs.julialang.org/en/v1/stdlib/Random/#Random.shuffle).
+completely randomise order of given collection.
+
+This algorithm is set as the default. See [`DEFAULTS`](@ref).
 
 # Examples
 ```jldoctest
-julia> mt1 = MersenneTwister(1234); mt2 = MersenneTwister(1234);
+julia> mt = MersenneTwister(1234);
 
-julia> Shuffle.shuffle(mt1, collect(1:100), FisherYates()) == Random.shuffle(mt2, collect(1:100))
-true
+julia> shuffle(mt, 1:7)
+7-element Array{Int64,1}:
+ 1
+ 2
+ 3
+ 7
+ 6
+ 4
+ 5
+
 ```
 """
-struct FisherYates <: RandomShuffle end
+struct RandomShuffle <: AbstractRandomShuffle end
 
-shuffle!(r::AbstractRNG, c::AbstractArray, s::FisherYates) = Random.shuffle!(r, c)
+shuffle!(r::AbstractRNG, c::AbstractArray, s::RandomShuffle) = Random.shuffle!(r, c)
 
 ## GilbertShannonReeds ##
 
 """
     GilbertShannonReeds()
 
-[Gilbert-Shannon-Reeds shuffling algorithm](https://en.wikipedia.org/wiki/Gilbert–Shannon–Reeds_model).
+[Gilbert-Shannon-Reeds](https://en.wikipedia.org/wiki/Gilbert–Shannon–Reeds_model)
+model of card shuffling.
+
+An in-place [`shuffle!`](@ref) is not implemented for this algorithm. However,
+[`nshuffle!`](@ref) is implemented.
 
 # Examples
 ```jldoctest
 julia> mt = MersenneTwister(1234);
 
-julia> nshuffle(mt, collect(1:7), 7, GilbertShannonReeds())
+julia> shuffle(mt, 1:7, GilbertShannonReeds())
 7-element Array{Int64,1}:
+ 5
  6
  1
+ 2
  7
  3
- 5
  4
- 2
+
 ```
 """
-struct GilbertShannonReeds <: RandomShuffle end
+struct GilbertShannonReeds <: AbstractRandomShuffle end
 
 function shuffle(
     r::AbstractRNG,
