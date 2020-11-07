@@ -20,18 +20,18 @@ nshuffle!
 AbstractShuffle
 ```
 
-### `DeterministicShuffle`
+### Deterministic Shuffles
 
 ```@docs
-DeterministicShuffle
+AbstractDeterministicShuffle
 Faro
 ```
 
-### `RandomShuffle`
+### Random Shuffles
 
 ```@docs
+AbstractRandomShuffle
 RandomShuffle
-FisherYates
 GilbertShannonReeds
 ```
 
