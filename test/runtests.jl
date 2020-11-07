@@ -88,17 +88,19 @@ end
     end
 end
 
-DocMeta.setdocmeta!(
-    Shuffle,
-    :DocTestSetup,
-    quote
-        using Shuffle
-        import Random
-        using Random: MersenneTwister
-    end;
-    recursive=true
-)
+if false
+    DocMeta.setdocmeta!(
+        Shuffle,
+        :DocTestSetup,
+        quote
+            using Shuffle
+            import Random
+            using Random: MersenneTwister
+        end;
+        recursive=true
+    )
 
-doctest(Shuffle)
+    doctest(Shuffle)
+end
 
 end
