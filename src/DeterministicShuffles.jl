@@ -2,8 +2,8 @@
     Faro(s::Symbol)
     Weave(s::Symbol)
 
-[Faro (weave) shuffling algorithm](https://en.wikipedia.org/wiki/Faro_shuffle) where `s` can be
-`:in` for an in-shuffle or `:out` for an out-shuffle.
+[Faro (weave)](https://en.wikipedia.org/wiki/Faro_shuffle) card shuffle where
+`s` can be `:in` for an in-shuffle or `:out` for an out-shuffle.
 
 # Examples
 ```jldoctest
