@@ -16,7 +16,7 @@ makedocs(
     modules = [Shuffle],
     pages = [
         "Home" => "index.md"
-        "Reference" => "reference.md"
+        "API Reference" => "reference.md"
     ],
     format = Documenter.HTML(
         prettyurls = get(ENV, "CI", nothing) == "true"
@@ -25,6 +25,5 @@ makedocs(
 
 deploydocs(
     repo = "github.com/Luapulu/Shuffle.jl.git",
-    devbranch = "main",
-    versions = ["stable" => "v^", "v#.#", "dev" => "dev"]
+    devbranch = "main"
 )
