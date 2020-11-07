@@ -5,7 +5,6 @@ DocMeta.setdocmeta!(
     :DocTestSetup,
     quote
         using Shuffle
-        import Random
         using Random: MersenneTwister
     end;
     recursive=true
