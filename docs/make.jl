@@ -22,7 +22,4 @@ makedocs(
     )
 )
 
-deploydocs(
-    repo = "github.com/Luapulu/Shuffle.jl.git",
-    devbranch = "main"
-)
+deploydocs(repo = "github.com/Luapulu/Shuffle.jl.git")
