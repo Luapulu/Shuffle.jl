@@ -11,7 +11,7 @@ Shuffle
 The package is registered. Install in the REPL using:
 
 ```julia
-]add Shuffle
+julia> ]add Shuffle
 ```
 
 ## Basic Usage
