@@ -26,6 +26,14 @@ SUITE["Faro"]["out"]["nshuffle"] = @benchmarkable nshuffle($DECK, 26, Faro{:out}
 
 SUITE["Faro"]["out"]["nshuffle!"] = @benchmarkable nshuffle!($DECK, 26, Faro{:out}())
 
+## Cut ##
+
+SUITE["Cut"] = BenchmarkGroup(["deterministic"])
+
+SUITE["Cut"]["shuffle"] = @benchmarkable shuffle($DECK, Cut(n)) setup=(n=rand(0:52))
+
+SUITE["Cut"]["nshuffle"] = @benchmarkable nshuffle($DECK, 10, Cut(n)) setup=(n=rand(0:52))
+
 ## RandomShuffle ##
 
 SUITE["Random"] = BenchmarkGroup(["random"])
