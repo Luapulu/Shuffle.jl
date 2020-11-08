@@ -8,10 +8,10 @@ Shuffle
 
 ## Installation
 
-The package isn't registered at the moment. Install in the REPL using:
+The package is registered. Install in the REPL using:
 
 ```julia
-]add https://github.com/Luapulu/Shuffle.jl.git
+]add Shuffle
 ```
 
 ## Basic Usage
