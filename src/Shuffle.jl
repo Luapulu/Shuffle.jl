@@ -120,16 +120,16 @@ binding to a mutable struct containing the default shuffling algorithm.
 
 # Examples
 ```jldoctest
-julia> Shuffle.DEFAULTS
-Shuffle.Defaults(RandomShuffle())
+julia> Shuffle.DEFAULTS.shuffle
+RandomShuffle()
 
 julia> mt1 = MersenneTwister(1234); mt2 = MersenneTwister(1234);
 
 julia> shuffle(mt1, collect(1:100)) == shuffle(mt2, collect(1:100), RandomShuffle())
 true
 
-julia> Shuffle.DEFAULTS.shuffle = infaro; Shuffle.DEFAULTS
-Shuffle.Defaults(Faro{:in}())
+julia> Shuffle.DEFAULTS.shuffle = infaro; Shuffle.DEFAULTS.shuffle
+Faro{:in}()
 
 julia> shuffle([1, 2, 3, 4, 5, 6, 7, 8])
 8-element Array{Int64,1}:
