@@ -19,7 +19,7 @@ The package isn't registered at the moment. Install in the REPL using:
 ```@meta
 DocTestSetup = quote
     using Shuffle
-    using Random: MersenneTwister
+    using Random: MersenneTwister, seed!
 end
 ```
 
@@ -27,7 +27,7 @@ end
 works just like [`Random.shuffle`](https://docs.julialang.org/en/v1/stdlib/Random/#Random.shuffle)
 by default.
 
-```jldoctest; setup = :(Random.seed!(1))
+```jldoctest; setup = :(seed!(1))
 julia> using Shuffle
 
 julia> shuffle([1, 2, 3, 4, 5, 6, 7])
@@ -45,7 +45,7 @@ The default shuffling algorithm randomises a collection totally, but you can
 just as easily use any other algorithm. See [`Shuffle.DEFAULTS`](@ref) to set
 another algorithm as the default.
 
-```jldoctest; setup = :(Random.seed!(1))
+```jldoctest; setup = :(seed!(1))
 julia> shuffle(collect(1:52), GilbertShannonReeds())
 52-element Array{Int64,1}:
  30
