@@ -45,7 +45,8 @@ abstract type AbstractShuffle end
 """
     AbstractDeterministicShuffle <: AbstractShuffle
 
-Supertype for fully deterministic shuffle algorithms such as [`Faro`](@ref)
+Supertype for fully deterministic shuffle algorithms such as [`Faro`](@ref) and
+[`Cut`](@ref).
 
 # Implementation
 
