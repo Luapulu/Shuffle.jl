@@ -35,6 +35,18 @@ using Random: MersenneTwister, default_rng
     @test nshuffle!(collect(1:52), 8, Faro{:out}()) == collect(1:52)
 end
 
+@testset "Cut" begin
+    @test shuffle([1, 2, 3, 4, 5], Cut(2)) == [3, 4, 5, 1, 2]
+
+    @test shuffle([1, 2, 3, 4, 5], Cut(0)) == [1, 2, 3, 4, 5]
+
+    @test shuffle([1, 2, 3, 4, 5], Cut(5)) == [1, 2, 3, 4, 5]
+
+    @test_throws DomainError shuffle([1, 2, 3, 4, 5], Cut(7))
+
+    @test nshuffle(collect(1:100), 7, Cut(10)) == vcat(71:100, 1:70)
+end
+
 @testset "RandomShuffle" begin
 
     @test randshuffle === RandomShuffle()

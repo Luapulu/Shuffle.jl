@@ -29,6 +29,7 @@ infaro
 outfaro
 inweave
 outweave
+Cut
 ```
 
 ### Random Shuffles
