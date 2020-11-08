@@ -1,9 +1,10 @@
 ## RandomShuffle ##
 
 """
-    RandomShuffle()
+    RandomShuffle
 
-completely randomise order of given collection.
+type with no fields representing a completely random shuffle with singleton instance
+[`randshuffle`](@ref).
 
 This algorithm is set as the default. See [`DEFAULTS`](@ref).
 
@@ -11,7 +12,7 @@ This algorithm is set as the default. See [`DEFAULTS`](@ref).
 ```jldoctest
 julia> mt = MersenneTwister(1234);
 
-julia> shuffle(mt, 1:7)
+julia> shuffle(mt, 1:7, randshuffle)
 7-element Array{Int64,1}:
  1
  2
@@ -25,24 +26,31 @@ julia> shuffle(mt, 1:7)
 """
 struct RandomShuffle <: AbstractRandomShuffle end
 
+"""
+    randshuffle
+
+The singleton instance of type [`RandomShuffle`](@ref)
+"""
+const randshuffle = RandomShuffle()
+
 shuffle!(r::AbstractRNG, c::AbstractArray, s::RandomShuffle) = Random.shuffle!(r, c)
 
 ## GilbertShannonReeds ##
 
 """
-    GilbertShannonReeds()
+    GilbertShannonReeds
 
-[Gilbert-Shannon-Reeds](https://en.wikipedia.org/wiki/Gilbert–Shannon–Reeds_model)
-model of card shuffling.
+type with no fields representing the [Gilbert-Shannon-Reeds](https://en.wikipedia.org/wiki/Gilbert–Shannon–Reeds_model)
+model of card shuffling. See singleton instance [`gsrshuffle`](@ref).
 
-An in-place [`shuffle!`](@ref) is not implemented for this algorithm. However,
+An in-place [`shuffle!`](@ref) is not implemented for this algorithm. However, an in-place
 [`nshuffle!`](@ref) is implemented.
 
 # Examples
 ```jldoctest
 julia> mt = MersenneTwister(1234);
 
-julia> shuffle(mt, 1:7, GilbertShannonReeds())
+julia> shuffle(mt, 1:7, gsrshuffle)
 7-element Array{Int64,1}:
  5
  6
@@ -55,6 +63,13 @@ julia> shuffle(mt, 1:7, GilbertShannonReeds())
 ```
 """
 struct GilbertShannonReeds <: AbstractRandomShuffle end
+
+"""
+    gsrshuffle
+
+The singleton instance of type [`GilbertShannonReeds`](@ref).
+"""
+const gsrshuffle = GilbertShannonReeds()
 
 function shuffle(
     r::AbstractRNG,

@@ -6,6 +6,9 @@ using Random: MersenneTwister
 @testset "Faro" begin
     @test Faro === Weave
 
+    @test infaro === inweave === Faro{:in}()
+    @test outfaro === outweave === Faro{:out}()
+
     x = [1, 2, 3, 4, 5, 6]
     shuffle!(x, Faro{:in}()) == x == [4, 1, 5, 2, 6, 3]
 
@@ -33,6 +36,9 @@ using Random: MersenneTwister
 end
 
 @testset "RandomShuffle" begin
+
+    @test randshuffle === RandomShuffle()
+
     # probably not the same after shuffling
     arr = rand(1000)
     arr_copy = copy(arr)
@@ -66,6 +72,9 @@ end
 end
 
 @testset "GilbertShannonReeds" begin
+
+    @test gsrshuffle === GilbertShannonReeds()
+
     # probably not the same after shuffling
     arr = rand(1000)
     @test shuffle(arr, GilbertShannonReeds()) != arr

@@ -19,7 +19,6 @@ The package isn't registered at the moment. Install in the REPL using:
 ```@meta
 DocTestSetup = quote
     using Shuffle
-    import Random
     using Random: MersenneTwister
 end
 ```

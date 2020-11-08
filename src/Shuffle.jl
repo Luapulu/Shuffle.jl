@@ -18,6 +18,7 @@ using Base: copymutable
 
 export AbstractShuffle, AbstractDeterministicShuffle, AbstractRandomShuffle
 export Faro, Weave, RandomShuffle, GilbertShannonReeds
+export infaro, outfaro, inweave, outweave, randshuffle, gsrshuffle
 export shuffle, shuffle!, nshuffle, nshuffle!
 
 ## Abstract Types ##

@@ -25,6 +25,10 @@ AbstractShuffle
 ```@docs
 AbstractDeterministicShuffle
 Faro
+infaro
+outfaro
+inweave
+outweave
 ```
 
 ### Random Shuffles
@@ -32,7 +36,9 @@ Faro
 ```@docs
 AbstractRandomShuffle
 RandomShuffle
+randshuffle
 GilbertShannonReeds
+gsrshuffle
 ```
 
 ## Defaults
