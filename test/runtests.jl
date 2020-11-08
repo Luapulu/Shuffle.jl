@@ -1,5 +1,5 @@
 using Test, Shuffle, Documenter
-using Random: MersenneTwister
+using Random: MersenneTwister, default_rng
 
 @testset "Shuffle.jl" begin
 
@@ -126,6 +126,24 @@ end
 
     Shuffle.DEFAULTS.shuffle = RandomShuffle()
     @test Shuffle.DEFAULTS.shuffle === RandomShuffle()
+end
+
+@testset "Default RNG" begin
+    rng = copy(default_rng())
+    @test shuffle(collect(1:100), RandomShuffle()) ==
+          shuffle(rng, collect(1:100), RandomShuffle())
+
+    rng = copy(default_rng())
+    @test shuffle!(collect(1:100), RandomShuffle()) ==
+          shuffle!(rng, collect(1:100), RandomShuffle())
+
+    rng = copy(default_rng())
+    @test nshuffle(collect(1:100), 5, RandomShuffle()) ==
+          nshuffle(rng, collect(1:100), 5, RandomShuffle())
+
+    rng = copy(default_rng())
+    @test nshuffle!(collect(1:100), 6, RandomShuffle()) ==
+          nshuffle!(rng, collect(1:100), 6, RandomShuffle())
 end
 
 if false
