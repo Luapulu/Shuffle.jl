@@ -71,7 +71,9 @@ function shuffle!(c::AbstractArray, f::Faro, tmp = similar(c, (length(c) ÷ 2,))
 
     hlf = length(c) ÷ 2
 
-    unsafe_copyto!(tmp, 1, c, 1, hlf)
+    for i = 1:hlf
+        @inbounds tmp[i] = c[i]
+    end
 
     for i = 1:hlf
         @inbounds c[_eo(i, f)] = c[hlf+i]
