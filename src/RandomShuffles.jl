@@ -82,16 +82,13 @@ function shuffle(
     # flip a coin to determine from which pile each item will come
     flips = rand(r, Bool, length(c))
 
-    # positions in the collection for the first and second pile
-    swtch = [1, count(flips) + 1]
+    # positions in the collection for the first pile and second pile
+    pos1 = 0
+    pos2 = count(flips)
 
-    # Get item from respective pile and increment position in collection for each item
+    # Get items from respective pile
     for (i, frmfirst) in enumerate(flips)
-        pidx = 2 - frmfirst
-        @inbounds begin
-            out[i] = c[swtch[pidx]]
-            swtch[pidx] += 1
-        end
+        @inbounds out[i] = c[frmfirst ? pos1 += 1 : pos2 += 1]
     end
 
     return out
