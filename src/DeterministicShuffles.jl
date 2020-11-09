@@ -65,15 +65,12 @@ const outweave = Weave{:out}()
 @inline _eo(i::Int, ::Faro{:in}) = 2i - 1
 @inline _eo(i::Int, ::Faro{:out}) = 2i
 
-function shuffle!(c::AbstractArray, f::Faro, tmp = similar(c, (length(c) ÷ 2,)))
+function shuffle!(c::AbstractArray, f::Faro)
     iseven(length(c)) || error("Faro (Weave) shuffling requires even length array")
-    2 * length(tmp) >= length(c) || error("temp array must be >= half array length")
 
     hlf = length(c) ÷ 2
 
-    for i = 1:hlf
-        @inbounds tmp[i] = c[i]
-    end
+    tmp = c[1:hlf]
 
     for i = 1:hlf
         @inbounds c[_eo(i, f)] = c[hlf+i]
