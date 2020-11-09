@@ -59,22 +59,26 @@ Alias for [`outfaro`](@ref).
 """
 const outweave = Weave{:out}()
 
-@inline _bo(i::Int, ::Faro{:in}) = 2i
-@inline _bo(i::Int, ::Faro{:out}) = 2i - 1
+@inline _bo(::Array, i::Int, ::Faro{:in}) = 2i
+@inline _bo(::Array, i::Int, ::Faro{:out}) = 2i - 1
+@inline _bo(c::AbstractArray, i::Int, ::Faro{:in}) = 2(i - firstindex(c) + 1)
+@inline _bo(c::AbstractArray, i::Int, ::Faro{:out}) = 2(i - firstindex(c)) + 1
 
-@inline _eo(i::Int, ::Faro{:in}) = 2i - 1
-@inline _eo(i::Int, ::Faro{:out}) = 2i
+@inline _eo(::Array, i::Int, ::Faro{:in}) = 2i - 1
+@inline _eo(::Array, i::Int, ::Faro{:out}) = 2i
+@inline _eo(c::AbstractArray, i::Int, ::Faro{:in}) = 2(i - firstindex(c)) + 1
+@inline _eo(c::AbstractArray, i::Int, ::Faro{:out}) = 2(i - firstindex(c) + 1)
 
 function shuffle!(c::AbstractArray, f::Faro)
     iseven(length(c)) || error("Faro (Weave) shuffling requires even length array")
 
-    hlf = length(c) ÷ 2
+    hlf = (lastindex(c) - firstindex(c) + 1) ÷ 2
 
-    tmp = c[1:hlf]
+    tmp = c[firstindex(c):hlf]
 
-    for i = 1:hlf
-        @inbounds c[_eo(i, f)] = c[hlf+i]
-        @inbounds c[_bo(i, f)] = tmp[i]
+    for i = firstindex(c):hlf
+        @inbounds c[_eo(c, i, f)] = c[hlf+i]
+        @inbounds c[_bo(c, i, f)] = tmp[i]
     end
 
     return c
