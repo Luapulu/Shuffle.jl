@@ -59,11 +59,11 @@ Alias for [`outfaro`](@ref).
 """
 const outweave = Weave{:out}()
 
-@inline _bo(::Faro{:in}) = 0
-@inline _bo(::Faro{:out}) = 1
+@inline _bo(i::Int, ::Faro{:in}) = 2i
+@inline _bo(i::Int, ::Faro{:out}) = 2i - 1
 
-@inline _eo(::Faro{:in}) = 1
-@inline _eo(::Faro{:out}) = 0
+@inline _eo(i::Int, ::Faro{:in}) = 2i - 1
+@inline _eo(i::Int, ::Faro{:out}) = 2i
 
 function shuffle!(c::AbstractArray, f::Faro, tmp = similar(c, (length(c) ÷ 2,)))
     iseven(length(c)) || error("Faro (Weave) shuffling requires even length array")
@@ -71,13 +71,11 @@ function shuffle!(c::AbstractArray, f::Faro, tmp = similar(c, (length(c) ÷ 2,))
 
     hlf = length(c) ÷ 2
 
-    for i = 1:hlf
-        @inbounds tmp[i] = c[i]
-    end
+    unsafe_copyto!(tmp, 1, c, 1, hlf)
 
     for i = 1:hlf
-        @inbounds c[2i - _eo(f)] = c[hlf+i]
-        @inbounds c[2i - _bo(f)] = tmp[i]
+        @inbounds c[_eo(i, f)] = c[hlf+i]
+        @inbounds c[_bo(i, f)] = tmp[i]
     end
 
     return c
@@ -112,7 +110,8 @@ struct Cut <: AbstractDeterministicShuffle
     n::Int
 end
 
-@inline _cuterr(A, n) = DomainError("cannot cut array with indices $(eachindex(A)) at $n")
+@inline _cuterr(A, n) = DomainError(
+    n, "cannot cut array with indices $(eachindex(A)) at $n")
 @inline _validcut(A, n) = firstindex(A) - 1 <= n <= lastindex(A)
 @inline _checkcut(A, n) = _validcut(A, n) || throw(_cuterr(A, n))
 
