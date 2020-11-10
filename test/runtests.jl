@@ -1,4 +1,4 @@
-using Test, Shuffle, Documenter
+using Test, Shuffle, Documenter, OffsetArrays
 using Random: MersenneTwister, default_rng
 
 @testset "Shuffle.jl" begin
@@ -15,7 +15,7 @@ using Random: MersenneTwister, default_rng
     y = [1, 2, 3, 4, 5, 6]
     shuffle([1, 2, 3, 4, 5, 6], Faro{:out}()) == [1, 4, 2, 5, 3, 6] != y
 
-    arr = rand("ATCG", 1000)
+    arr = rand(Int, 1000)
     inshuffled = shuffle(arr, Faro{:in}())
     outshuffled = shuffle(arr, Faro{:out}())
 
@@ -32,7 +32,11 @@ using Random: MersenneTwister, default_rng
     nshuffle!(revarr, 26, Faro{:in}())
     @test revarr == collect(1:52)
 
-    @test nshuffle!(collect(1:52), 8, Faro{:out}()) == collect(1:52)
+    @test nshuffle(collect(1:52), 8, Faro{:out}()) == collect(1:52)
+
+    OA = OffsetArray(1:6, 6:11)
+    @test parent(shuffle(OA, Faro{:out}())::OffsetArray) == [1, 4, 2, 5, 3, 6]
+    @test parent(shuffle(OA, Faro{:in}())::OffsetArray) == [4, 1, 5, 2, 6, 3]
 end
 
 @testset "Cut" begin
