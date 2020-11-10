@@ -61,24 +61,26 @@ const outweave = Weave{:out}()
 
 @inline _bo(::Array, i::Int, ::Faro{:in}) = 2i
 @inline _bo(::Array, i::Int, ::Faro{:out}) = 2i - 1
-@inline _bo(c::AbstractArray, i::Int, ::Faro{:in}) = 2(i - firstindex(c) + 1)
-@inline _bo(c::AbstractArray, i::Int, ::Faro{:out}) = 2(i - firstindex(c)) + 1
+@inline _bo(c::AbstractArray, i::Int, ::Faro{:in}) = 2i + firstindex(c) - 1
+@inline _bo(c::AbstractArray, i::Int, ::Faro{:out}) = 2i + firstindex(c) - 2
 
 @inline _eo(::Array, i::Int, ::Faro{:in}) = 2i - 1
 @inline _eo(::Array, i::Int, ::Faro{:out}) = 2i
-@inline _eo(c::AbstractArray, i::Int, ::Faro{:in}) = 2(i - firstindex(c)) + 1
-@inline _eo(c::AbstractArray, i::Int, ::Faro{:out}) = 2(i - firstindex(c) + 1)
+@inline _eo(c::AbstractArray, i::Int, ::Faro{:in}) = 2i + firstindex(c) - 2
+@inline _eo(c::AbstractArray, i::Int, ::Faro{:out}) = 2i + firstindex(c) - 1
 
 function shuffle!(c::AbstractArray, f::Faro)
     iseven(length(c)) || error("Faro (Weave) shuffling requires even length array")
 
-    hlf = (lastindex(c) - firstindex(c) + 1) ÷ 2
+    hlf = length(c) ÷ 2 + firstindex(c) - 1
 
-    tmp = c[firstindex(c):hlf]
+    tmp::Array = c[firstindex(c):hlf]
 
-    for i = firstindex(c):hlf
-        @inbounds c[_eo(c, i, f)] = c[hlf+i]
-        @inbounds c[_bo(c, i, f)] = tmp[i]
+    for i in 1:length(c) ÷ 2
+        @inbounds begin
+            c[_eo(c, i, f)] = c[hlf + i]
+            c[_bo(c, i, f)] = tmp[i]
+        end
     end
 
     return c
