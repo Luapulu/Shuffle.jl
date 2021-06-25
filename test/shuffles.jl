@@ -50,6 +50,10 @@ end
 
     @test randshuffle === RandomShuffle()
 
+    let mt1 = MersenneTwister(132), mt2 = MersenneTwister(132), x = rand(1000)
+        @test shuffle(mt1, x, RandomShuffle()) == Random.shuffle(mt2, x)
+    end
+
     # probably not the same after shuffling
     arr = rand(1000)
     arr_copy = copy(arr)

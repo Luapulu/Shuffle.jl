@@ -3,24 +3,18 @@
 """
     RandomShuffle
 
-type with no fields representing a completely random shuffle with singleton instance
-[`randshuffle`](@ref).
+type with no fields representing a completely random shuffle, which is guaranteed to be
+equivalent to [`Random.shuffle`](https://docs.julialang.org/en/v1/stdlib/Random/#Random.shuffle)).
 
-This algorithm is set as the default. See [`DEFAULTS`](@ref).
+This algorithm is set as the default. See [`DEFAULTS`](@ref) and has the singleton instance
+[`randshuffle`](@ref).
 
 # Examples
 ```jldoctest
-julia> mt = MersenneTwister(1234);
+julia> mt1 = MersenneTwister(1234); mt2 = MersenneTwister(1234);
 
-julia> shuffle(mt, 1:7, randshuffle)
-7-element Vector{Int64}:
- 1
- 2
- 3
- 7
- 6
- 4
- 5
+julia> shuffle(mt1, 1:10, randshuffle) == Random.shuffle(mt2, 1:10)
+true
 
 ```
 """

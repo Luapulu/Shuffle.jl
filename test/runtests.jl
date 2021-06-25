@@ -1,5 +1,6 @@
 using Test, Shuffle, Documenter, OffsetArrays
 using Random: MersenneTwister, default_rng
+import Random
 
 @testset "Shuffle.jl" begin
 
