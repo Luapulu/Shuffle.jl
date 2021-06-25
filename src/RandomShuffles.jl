@@ -13,7 +13,7 @@ This algorithm is set as the default. See [`DEFAULTS`](@ref).
 julia> mt = MersenneTwister(1234);
 
 julia> shuffle(mt, 1:7, randshuffle)
-7-element Array{Int64,1}:
+7-element Vector{Int64}:
  1
  2
  3
@@ -51,7 +51,7 @@ An in-place [`shuffle!`](@ref) is not implemented for this algorithm. However, a
 julia> mt = MersenneTwister(1234);
 
 julia> shuffle(mt, 1:7, gsrshuffle)
-7-element Array{Int64,1}:
+7-element Vector{Int64}:
  5
  6
  1

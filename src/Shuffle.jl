@@ -135,7 +135,7 @@ julia> Shuffle.DEFAULTS.shuffle = infaro; Shuffle.DEFAULTS.shuffle
 Faro{:in}()
 
 julia> shuffle([1, 2, 3, 4, 5, 6, 7, 8])
-8-element Array{Int64,1}:
+8-element Vector{Int64}:
  5
  1
  6
@@ -165,7 +165,7 @@ julia> mt = MersenneTwister(1234);
 julia> a = collect(1:6);
 
 julia> shuffle!(mt, a); a
-6-element Array{Int64,1}:
+6-element Vector{Int64}:
  2
  1
  3
@@ -174,7 +174,7 @@ julia> shuffle!(mt, a); a
  5
 
 julia> shuffle!(a, Faro{:out}()); a
-6-element Array{Int64,1}:
+6-element Vector{Int64}:
  2
  6
  1
@@ -199,7 +199,7 @@ algorithms.
 julia> mt = MersenneTwister(1234);
 
 julia> shuffle(mt, [1, 2, 3, 4, 5, 6, 7, 8], GilbertShannonReeds())
-8-element Array{Int64,1}:
+8-element Vector{Int64}:
  6
  7
  1
@@ -210,7 +210,7 @@ julia> shuffle(mt, [1, 2, 3, 4, 5, 6, 7, 8], GilbertShannonReeds())
  5
 
 julia> shuffle([6, 5, 4, 3, 2, 1], Faro{:in}())
-6-element Array{Int64,1}:
+6-element Vector{Int64}:
  3
  6
  2
@@ -238,7 +238,7 @@ julia> mt = MersenneTwister(1234);
 julia> a = collect(1:7);
 
 julia> nshuffle!(mt, a, 3, GilbertShannonReeds()); a
-7-element Array{Int64,1}:
+7-element Vector{Int64}:
  5
  6
  1
@@ -276,7 +276,7 @@ To shuffle `c` in-place see [`nshuffle!`](@ref)
 # Examples
 ```jldoctest
 julia> nshuffle(collect(1:8), 3, Faro{:in}())
-8-element Array{Int64,1}:
+8-element Vector{Int64}:
  8
  7
  6

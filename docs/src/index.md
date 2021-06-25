@@ -31,7 +31,7 @@ by default.
 julia> using Shuffle
 
 julia> shuffle([1, 2, 3, 4, 5, 6, 7])
-7-element Array{Int64,1}:
+7-element Vector{Int64}:
  5
  1
  4
@@ -47,7 +47,7 @@ another algorithm as the default.
 
 ```jldoctest; setup = :(seed!(1))
 julia> shuffle(collect(1:52), GilbertShannonReeds())
-52-element Array{Int64,1}:
+52-element Vector{Int64}:
  30
   1
  31
@@ -78,7 +78,7 @@ julia> arr = ["A", "B", "C", "D"];
 julia> shuffle!(arr, Faro{:in}());
 
 julia> arr
-4-element Array{String,1}:
+4-element Vector{String}:
  "C"
  "A"
  "D"
@@ -89,7 +89,7 @@ We can also shuffle 3 times in a row (and get back to the original order).
 
 ```jldoctest faro
 julia> nshuffle!(arr, 3, Faro{:in}())
-4-element Array{String,1}:
+4-element Vector{String}:
  "A"
  "B"
  "C"

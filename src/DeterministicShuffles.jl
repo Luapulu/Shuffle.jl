@@ -13,7 +13,7 @@ See singleton instances [`infaro`](@ref), [`outfaro`](@ref), [`inweave`](@ref),
 # Examples
 ```jldoctest
 julia> shuffle([1, 2, 3, 4, 5, 6, 7, 8], Faro{:out}())
-8-element Array{Int64,1}:
+8-element Vector{Int64}:
  1
  5
  2
@@ -101,7 +101,7 @@ No in-place [`shuffle!`](@ref) or [`nshuffle!`](@ref) exist for this shuffling t
 
 ```jldoctest
 julia> shuffle([1, 2, 3, 4, 5, 6, 7], Cut(3))
-7-element Array{Int64,1}:
+7-element Vector{Int64}:
  4
  5
  6
